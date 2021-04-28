@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:transactionkeeper/enums/transaction_enums.dart';
+import 'package:transactionkeeper/screens/new_transaction_page/new_transaction_page.dart';
 import 'package:transactionkeeper/widget/transaction_card.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,19 +11,16 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TabController tabController;
-  String someText = "Some text";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     tabController = TabController(length: 2, vsync: this);
-    someText = "Some other text changed";
   }
 
   @override
   Widget build(BuildContext context) {
-    /// someText = "Some other text Three Two Two";
     return Scaffold(
       appBar: AppBar(
         title: Text("Transactions"),
@@ -93,7 +90,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Fluttertoast.showToast(msg: "The add button was clicked");
+          // Fluttertoast.showToast(msg: "The add button was clicked");
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => NewTransactionPage()));
         },
         child: Icon(Icons.add),
       ),
