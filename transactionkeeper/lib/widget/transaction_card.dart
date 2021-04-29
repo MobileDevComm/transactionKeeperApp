@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:transactionkeeper/enums/transaction_enums.dart';
+import 'package:transactionkeeper/models/transaction.dart';
 
 class TransactionCard extends StatelessWidget {
-  final String name;
-  final double amount;
-  final DateTime date;
-  final TransactionType type;
+  final Transaction transaction;
 
-  TransactionCard(this.name, this.amount,
-      {this.date, this.type = TransactionType.debit});
+  TransactionCard({this.transaction});
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +27,22 @@ class TransactionCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            "Date/Time",
+                            "${transaction.date}",
                             style: TextStyle(
                                 fontSize: 15, color: Colors.grey[700]),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(4.0),
-                          child: Text('$name', style: TextStyle(fontSize: 20)),
+                          child: Text('${transaction.beneficiary}',
+                              style: TextStyle(fontSize: 20)),
                         ),
                       ],
                     ),
-                    Text("$amount",
+                    Text("${transaction.amount.toString()}",
                         style: TextStyle(
                           fontSize: 20,
-                          color: type == TransactionType.credit
+                          color: transaction.type == TransactionType.credit
                               ? Colors.green.shade600
                               : Colors.red.shade600,
                         )),

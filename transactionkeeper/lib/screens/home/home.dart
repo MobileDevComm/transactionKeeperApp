@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:transactionkeeper/enums/transaction_enums.dart';
+import 'package:transactionkeeper/models/transaction.dart';
 import 'package:transactionkeeper/screens/new_transaction_page/new_transaction_page.dart';
 import 'package:transactionkeeper/widget/transaction_card.dart';
 
@@ -11,12 +12,21 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TabController tabController;
+  List<Transaction> transactions = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     tabController = TabController(length: 2, vsync: this);
+  }
+
+  List<Transaction> getTransactionsOf(TransactionType type) {
+    List<Transaction> _result = [];
+    for (Transaction trans in transactions) {
+      if (trans.type == type) _result.add(trans);
+    }
+    return _result;
   }
 
   @override
@@ -35,8 +45,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: TabBarView(
         controller: tabController,
         children: [
-          DebitPage(),
-          CreditPage(),
+          DebitPage(
+            transactions: getTransactionsOf(TransactionType.debit),
+          ),
+          CreditPage(
+            transactions: getTransactionsOf(TransactionType.credit),
+          ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -89,10 +103,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           // Fluttertoast.showToast(msg: "The add button was clicked");
-          Navigator.push(context,
+          Transaction newTrans = await Navigator.push(context,
               MaterialPageRoute(builder: (context) => NewTransactionPage()));
+          print(newTrans.toString());
+          transactions.add(newTrans);
+          setState(() {});
         },
         child: Icon(Icons.add),
       ),
@@ -101,105 +118,47 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 }
 
 class DebitPage extends StatelessWidget {
+  final List<Transaction> transactions;
+
+  DebitPage({this.transactions});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          TransactionCard(
-            'Dolapo',
-            2000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Damilare',
-            30000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Olamiji',
-            5000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'BEAM',
-            50000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Seyi',
-            20000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Promise',
-            3000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Tobi',
-            4000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Victor',
-            70000.00,
-            type: TransactionType.debit,
-          ),
-        ],
-      ),
+      child: Column(children: generateCards()),
     );
+  }
+
+  List<TransactionCard> generateCards() {
+    List<TransactionCard> _cards = [];
+    for (Transaction trans in transactions)
+      _cards.add(TransactionCard(
+        transaction: trans,
+      ));
+    return _cards;
   }
 }
 
 class CreditPage extends StatelessWidget {
+  final List<Transaction> transactions;
+
+  CreditPage({this.transactions});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: [
-          TransactionCard(
-            'Dolapo',
-            200000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Damilare',
-            30000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Olamiji',
-            5000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'BEAM',
-            50000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Seyi',
-            20000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Promise',
-            3000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Tobi',
-            4000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Victor',
-            70000.00,
-            type: TransactionType.credit,
-          ),
-        ],
+        children: generateCards(),
       ),
     );
+  }
+
+  List<TransactionCard> generateCards() {
+    List<TransactionCard> _cards = [];
+    for (Transaction trans in transactions)
+      _cards.add(TransactionCard(
+        transaction: trans,
+      ));
+    return _cards;
   }
 }
