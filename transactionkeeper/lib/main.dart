@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transactionkeeper/widget/auth_input_field.dart';
 import 'auth_screens/login.dart';
 import 'screens/home/home.dart';
 
@@ -11,7 +12,7 @@ class TKApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Transaction Keeper",
-      home: LoginScreen(),
+      home: DolapoLogin(),
     );
   }
 }
