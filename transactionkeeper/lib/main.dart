@@ -11,7 +11,7 @@ class TKApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Transaction Keeper",
+      title: "Transaction Keeper"
       home: DolapoLogin(),
     );
   }
