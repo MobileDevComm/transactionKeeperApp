@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:transactionkeeper/widget/auth_input_field.dart';
+import 'package:transactionkeeper/widget/buttons.dart';
 import 'sign_up_screen.dart';
+
 
 class DolapoLogin extends StatelessWidget {
   @override
@@ -61,78 +64,13 @@ class _BodyState extends State<Body> {
                   ]),
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
+
           Container(
+            margin: EdgeInsets.only(top: 20),
             child: Column(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(32),
-                  ),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(
-                            width: 1.0,
-                            color: Colors.blue,
-                            // style: BorderStyle.none,
-                          )
-                      ),
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.person_outline),
-                      hintText: 'Enter your email',
-                      hintStyle: TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                Container(
-                  margin: EdgeInsets.only(top: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(32),
-                  ),
-                  child: TextFormField(
-                    keyboardType: TextInputType.visiblePassword,
-                      obscureText: true,
-                      // controller: ,
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(
-                              width: 1.0,
-                              color: Colors.blue,
-                              // style: BorderStyle.none,
-                            )
-                        ),
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.lock_outline),
-                        hintText: 'Password',
-                        hintStyle: TextStyle(
-                          fontSize: 15,
-                        ),
-                      )),
-                ),
-                // SizedBox(
-                //   height: 10,
-                // ),
+                InputText(hint_text: 'Enter your email', icon: Icons.person_outline_outlined,),
+               Password(icon: Icons.lock_outline, hint_text: "Password"),
                 Container(
                   margin: EdgeInsets.only(top: 5, bottom : 10),
                   alignment: Alignment.centerRight,
@@ -144,22 +82,7 @@ class _BodyState extends State<Body> {
           Container(
             margin: EdgeInsets.only(bottom: 25),
             child: Column(children: [
-              Container(
-                width: 180,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text('LOG IN'),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
-                    ),
-                    primary: Colors.blue[900],
-                  ),
-                ),
-              ),
+              Buttons(color: Colors.white ,text: 'LOG IN'),
               SizedBox(
                 height: 10,
               ),
@@ -248,3 +171,4 @@ class _BodyState extends State<Body> {
     );
   }
 }
+

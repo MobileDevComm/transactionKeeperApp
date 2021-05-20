@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:transactionkeeper/widget/auth_input_field.dart';
+import 'package:transactionkeeper/widget/buttons.dart';
 import 'login.dart';
 
 class SignUpp extends StatelessWidget {
@@ -59,181 +61,15 @@ class _MyFormState extends State<MyForm> {
               ],
             ),
           ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: TextFormField(
-                        keyboardType: TextInputType.name,
-                        // controller: ,
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(
-                                width: 1.0,
-                                color: Colors.blue,
-                                // style: BorderStyle.none,
-                              )),
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Icons.person_outline),
-                          hintText: 'Full Name',
-                          hintStyle: TextStyle(
-                            fontSize: 15,
-                          ),
-                        )),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        // controller: ,
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(
-                                width: 1.0,
-                                color: Colors.blue,
-                                // style: BorderStyle.none,
-                              )),
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Icons.mail_outline),
-                          hintText: 'Email',
-                          hintStyle: TextStyle(
-                            fontSize: 15,
-                          ),
-                        )),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: TextFormField(
-                        keyboardType: TextInputType.phone,
-                        // controller: ,
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(
-                                width: 1.0,
-                                color: Colors.blue,
-                                // style: BorderStyle.none,
-                              )),
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Icons.phone_android_outlined),
-                          hintText: 'Phone',
-                          hintStyle: TextStyle(
-                            fontSize: 15,
-                          ),
-                        )),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        // controller: ,
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(
-                              width: 1.0,
-                              color: Colors.blue,
-                              // style: BorderStyle.none,
-                            ),
-                          ),
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Icons.lock_outlined),
-                          hintText: 'Password',
-                          hintStyle: TextStyle(
-                            fontSize: 15,
-                          ),
-                        )),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: true,
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(
-                              width: 1.0,
-                              color: Colors.blue,
-                              // style: BorderStyle.none,
-                            )),
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.lock_outlined),
-                        hintText: 'Confirm Password',
-                        hintStyle: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          InputText(hint_text: 'Full Name', icon: Icons.person_outline),
+          InputText(hint_text: 'Email', icon: Icons.mail_outline),
+          InputText(hint_text: 'Phone', icon: Icons.phone_android_rounded),
+          Password(icon: Icons.lock_outline, hint_text: "Password"),
+          Password(icon: Icons.lock_outline, hint_text: "Confirm Password"),
+          SizedBox(
+            height: 10,
           ),
-          Container(
-            width: 180,
-            child: ElevatedButton(
-              style: TextButton.styleFrom(
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0),
-                ),
-              backgroundColor: Colors.blue[800],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Text('CREATE',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          Buttons(text: 'Create'.toUpperCase(), color: Colors.white),
           Container(
             margin: EdgeInsets.only(top: 10),
             child: Row(
