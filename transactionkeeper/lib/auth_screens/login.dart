@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:transactionkeeper/util/const.dart';
 import 'package:transactionkeeper/widget/auth_input_field.dart';
-
 import 'sign_up_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   colorFilter: ColorFilter.mode(
                       Colors.grey.shade100, BlendMode.modulate),
                   child: Image.asset(
-                    "assets/images/login-illustration.png",
+                    "images/login-illustration.png",
                     height: 200,
                     width: 200,
                   ),
