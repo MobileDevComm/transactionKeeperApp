@@ -34,6 +34,22 @@ class TransactionManager {
     return _getTransactionsOf(TransactionType.credit);
   }
 
+  double getTotalDebits() {
+    double _sum = 0;
+    for (Transaction trans in getAllDebitTransactions()) {
+      _sum += trans.amount;
+    }
+    return _sum;
+  }
+
+  double getTotalCredit() {
+    double _sum = 0;
+    for (Transaction trans in getAllCreditTransactions()) {
+      _sum += trans.amount;
+    }
+    return _sum;
+  }
+
 // Update
   updateTransaction(Transaction transaction) {
     _transactionsDb[transaction.id] = transaction;

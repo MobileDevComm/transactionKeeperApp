@@ -2,19 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:transactionkeeper/enums/transaction_enums.dart';
 import 'package:transactionkeeper/models/transaction.dart';
+import 'package:transactionkeeper/transaction_manager.dart';
 
 class NewTransactionPage extends StatefulWidget {
+  final int transId;
+
+  NewTransactionPage({this.transId});
+
   @override
   State<NewTransactionPage> createState() => NewTransactionPageState();
 }
 
 class NewTransactionPageState extends State<NewTransactionPage> {
   TransactionType type;
+  TransactionManager _manager = TransactionManager.instance;
   var beneController = TextEditingController();
   var descController = TextEditingController();
   var amtController = TextEditingController();
   var dateController = TextEditingController();
   DateTime _curDate = DateTime.now();
+  Transaction _currentTrans;
+
+  @override
+  void initState() {
+    if (widget.transId != null) {
+      _currentTrans = _manager.getTransactionWithId(widget.transId);
+      beneController.text = _currentTrans.beneficiary;
+      descController.text = _currentTrans.description;
+      amtController.text = _currentTrans.amount.toString();
+      dateController.text = _currentTrans.date;
+      type = _currentTrans.type;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +42,9 @@ class NewTransactionPageState extends State<NewTransactionPage> {
     TextStyle typeTextStyle =
         TextStyle(fontWeight: FontWeight.w400, fontSize: 18);
 
-    String _date = "${_curDate.day} / ${_curDate.month} / ${_curDate.year}";
+    String _date = _curDate != null
+        ? "${_curDate.day} / ${_curDate.month} / ${_curDate.year}"
+        : "";
 
     dateController.text = _date;
 
@@ -75,7 +96,7 @@ class NewTransactionPageState extends State<NewTransactionPage> {
                                   onPressed: () async {
                                     _curDate = await showDatePicker(
                                         context: context,
-                                        initialDate: _curDate,
+                                        initialDate: _curDate ?? DateTime.now(),
                                         firstDate: DateTime(2015),
                                         lastDate: DateTime(2022));
                                     setState(() {});
@@ -161,8 +182,11 @@ class NewTransactionPageState extends State<NewTransactionPage> {
                                 descController.text,
                                 beneController.text,
                                 double.parse(amtController.text));
+                            widget.transId == null
+                                ? _manager.recordTransaction(newTransaction)
+                                : _manager.updateTransaction(newTransaction);
                             await Future.delayed(Duration(seconds: 1));
-                            Navigator.pop(context, newTransaction);
+                            Navigator.pop(context);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),

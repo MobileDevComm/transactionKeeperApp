@@ -20,6 +20,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     tabController = TabController(length: 2, vsync: this);
+    tabController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -71,18 +74,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "\u20A6",
+                            "\$ ",
                             style: TextStyle(
-                              color: Colors.red,
+                              color: tabController.index == 0
+                                  ? Colors.red
+                                  : Colors.green,
                               fontWeight: FontWeight.bold,
                               fontSize: 28,
                             ),
                           ),
                           AutoSizeText(
-                            "500.00",
+                            tabController.index == 0
+                                ? "${_manager.getTotalDebits()}"
+                                : "${_manager.getTotalCredit()}",
                             minFontSize: 28,
                             style: TextStyle(
-                              color: Colors.red,
+                              color: tabController.index == 0
+                                  ? Colors.red
+                                  : Colors.green,
                               fontWeight: FontWeight.bold,
                             ),
                           )
