@@ -14,6 +14,7 @@ class NewTransactionPageState extends State<NewTransactionPage> {
   var descController = TextEditingController();
   var amtController = TextEditingController();
   var dateController = TextEditingController();
+  DateTime _curDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,10 @@ class NewTransactionPageState extends State<NewTransactionPage> {
         TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
     TextStyle typeTextStyle =
         TextStyle(fontWeight: FontWeight.w400, fontSize: 18);
+
+    String _date = "${_curDate.day} / ${_curDate.month} / ${_curDate.year}";
+
+    dateController.text = _date;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -51,10 +56,34 @@ class NewTransactionPageState extends State<NewTransactionPage> {
                     ),
                   ),
                   Expanded(
-                    child: TransactionInputField(
-                      label: "Date",
-                      inputType: TextInputType.datetime,
-                      controller: dateController,
+                    child: Stack(
+                      children: [
+                        TransactionInputField(
+                          label: "Date",
+                          inputType: TextInputType.datetime,
+                          controller: dateController,
+                        ),
+                        Positioned(
+                          top: 0,
+                          right: 10,
+                          bottom: 0,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                  icon: Icon(Icons.calendar_today),
+                                  onPressed: () async {
+                                    _curDate = await showDatePicker(
+                                        context: context,
+                                        initialDate: _curDate,
+                                        firstDate: DateTime(2015),
+                                        lastDate: DateTime(2022));
+                                    setState(() {});
+                                  }),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   )
                 ],
@@ -126,10 +155,6 @@ class NewTransactionPageState extends State<NewTransactionPage> {
                             Fluttertoast.showToast(
                                 msg:
                                     "Your Transaction has been saved successfully");
-                            print(beneController.text);
-                            print(descController.text);
-                            print(amtController.text);
-                            print(dateController.text);
                             Transaction newTransaction = Transaction(
                                 dateController.text,
                                 type,

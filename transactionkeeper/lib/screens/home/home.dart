@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:transactionkeeper/enums/transaction_enums.dart';
 import 'package:transactionkeeper/models/transaction.dart';
 import 'package:transactionkeeper/screens/new_transaction_page/new_transaction_page.dart';
+import 'package:transactionkeeper/transaction_manager.dart';
 import 'package:transactionkeeper/widget/transaction_card.dart';
 
 class Home extends StatefulWidget {
@@ -12,21 +13,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TabController tabController;
-  List<Transaction> transactions = [];
+  TransactionManager _manager = TransactionManager.instance;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     tabController = TabController(length: 2, vsync: this);
-  }
-
-  List<Transaction> getTransactionsOf(TransactionType type) {
-    List<Transaction> _result = [];
-    for (Transaction trans in transactions) {
-      if (trans.type == type) _result.add(trans);
-    }
-    return _result;
   }
 
   @override
@@ -46,10 +39,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         controller: tabController,
         children: [
           DebitPage(
-            transactions: getTransactionsOf(TransactionType.debit),
+            transactions: _manager.getAllDebitTransactions(),
           ),
           CreditPage(
-            transactions: getTransactionsOf(TransactionType.credit),
+            transactions: _manager.getAllCreditTransactions(),
           ),
         ],
       ),
@@ -108,7 +101,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           Transaction newTrans = await Navigator.push(context,
               MaterialPageRoute(builder: (context) => NewTransactionPage()));
           print(newTrans.toString());
-          transactions.add(newTrans);
+          _manager.recordTransaction(newTrans);
           setState(() {});
         },
         child: Icon(Icons.add),

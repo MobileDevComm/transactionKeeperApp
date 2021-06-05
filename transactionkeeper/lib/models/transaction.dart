@@ -1,6 +1,7 @@
 import 'package:transactionkeeper/enums/transaction_enums.dart';
 
 class Transaction {
+  int id;
   String date;
   TransactionType type;
   String description;

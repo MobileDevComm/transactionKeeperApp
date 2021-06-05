@@ -15,7 +15,7 @@ class TKApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
-      home: LoginScreen(),
+      home: Home(),
     );
   }
 }
