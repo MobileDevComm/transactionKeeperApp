@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:transactionkeeper/enums/transaction_enums.dart';
+import 'package:transactionkeeper/models/transaction.dart';
+import 'package:transactionkeeper/screens/new_transaction_page/new_transaction_page.dart';
+import 'package:transactionkeeper/transaction_manager.dart';
 import 'package:transactionkeeper/widget/transaction_card.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,19 +13,20 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TabController tabController;
-  String someText = "Some text";
+  TransactionManager _manager = TransactionManager.instance;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     tabController = TabController(length: 2, vsync: this);
-    someText = "Some other text changed";
+    tabController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    /// someText = "Some other text Three Two Two";
     return Scaffold(
       appBar: AppBar(
         title: Text("Transactions"),
@@ -38,8 +41,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: TabBarView(
         controller: tabController,
         children: [
-          DebitPage(),
-          CreditPage(),
+          DebitPage(
+            transactions: _manager.getAllDebitTransactions(),
+          ),
+          CreditPage(
+            transactions: _manager.getAllCreditTransactions(),
+          ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -67,18 +74,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "\u20A6",
+                            "\$ ",
                             style: TextStyle(
-                              color: Colors.red,
+                              color: tabController.index == 0
+                                  ? Colors.red
+                                  : Colors.green,
                               fontWeight: FontWeight.bold,
                               fontSize: 28,
                             ),
                           ),
                           AutoSizeText(
-                            "500.00",
+                            tabController.index == 0
+                                ? "${_manager.getTotalDebits()}"
+                                : "${_manager.getTotalCredit()}",
                             minFontSize: 28,
                             style: TextStyle(
-                              color: Colors.red,
+                              color: tabController.index == 0
+                                  ? Colors.red
+                                  : Colors.green,
                               fontWeight: FontWeight.bold,
                             ),
                           )
@@ -92,8 +105,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Fluttertoast.showToast(msg: "The add button was clicked");
+        onPressed: () async {
+          // Fluttertoast.showToast(msg: "The add button was clicked");
+          Transaction newTrans = await Navigator.push(context,
+              MaterialPageRoute(builder: (context) => NewTransactionPage()));
+          print(newTrans.toString());
+          _manager.recordTransaction(newTrans);
+          setState(() {});
         },
         child: Icon(Icons.add),
       ),
@@ -102,105 +120,47 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 }
 
 class DebitPage extends StatelessWidget {
+  final List<Transaction> transactions;
+
+  DebitPage({this.transactions});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          TransactionCard(
-            'Dolapo',
-            2000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Damilare',
-            30000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Olamiji',
-            5000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'BEAM',
-            50000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Seyi',
-            20000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Promise',
-            3000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Tobi',
-            4000.00,
-            type: TransactionType.debit,
-          ),
-          TransactionCard(
-            'Victor',
-            70000.00,
-            type: TransactionType.debit,
-          ),
-        ],
-      ),
+      child: Column(children: generateCards()),
     );
+  }
+
+  List<TransactionCard> generateCards() {
+    List<TransactionCard> _cards = [];
+    for (Transaction trans in transactions)
+      _cards.add(TransactionCard(
+        transaction: trans,
+      ));
+    return _cards;
   }
 }
 
 class CreditPage extends StatelessWidget {
+  final List<Transaction> transactions;
+
+  CreditPage({this.transactions});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: [
-          TransactionCard(
-            'Dolapo',
-            200000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Damilare',
-            30000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Olamiji',
-            5000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'BEAM',
-            50000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Seyi',
-            20000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Promise',
-            3000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Tobi',
-            4000.00,
-            type: TransactionType.credit,
-          ),
-          TransactionCard(
-            'Victor',
-            70000.00,
-            type: TransactionType.credit,
-          ),
-        ],
+        children: generateCards(),
       ),
     );
+  }
+
+  List<TransactionCard> generateCards() {
+    List<TransactionCard> _cards = [];
+    for (Transaction trans in transactions)
+      _cards.add(TransactionCard(
+        transaction: trans,
+      ));
+    return _cards;
   }
 }
