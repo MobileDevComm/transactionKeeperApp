@@ -67,4 +67,9 @@ class TransactionManager {
     }
     return _result;
   }
+
+  void randomFunction() {
+    var somevar = 100;
+    return;
+  }
 }
