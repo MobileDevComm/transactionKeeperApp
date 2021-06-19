@@ -105,12 +105,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // Fluttertoast.showToast(msg: "The add button was clicked");
-          Transaction newTrans = await Navigator.push(context,
+        onPressed: () {
+          Navigator.push(context,
               MaterialPageRoute(builder: (context) => NewTransactionPage()));
-          print(newTrans.toString());
-          _manager.recordTransaction(newTrans);
           setState(() {});
         },
         child: Icon(Icons.add),

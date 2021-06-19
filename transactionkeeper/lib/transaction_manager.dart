@@ -27,11 +27,11 @@ class TransactionManager {
   }
 
   List<Transaction> getAllDebitTransactions() {
-    return _getTransactionsOf(TransactionType.debit);
+    return _getTransactionsOf(TransactionType.debit).reversed.toList();
   }
 
   List<Transaction> getAllCreditTransactions() {
-    return _getTransactionsOf(TransactionType.credit);
+    return _getTransactionsOf(TransactionType.credit).reversed.toList();
   }
 
   double getTotalDebits() {
