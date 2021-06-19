@@ -166,37 +166,40 @@ class NewTransactionPageState extends State<NewTransactionPage> {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            Fluttertoast.showToast(
-                                msg:
-                                    "Your Transaction has been saved successfully");
-                            Transaction newTransaction = Transaction(
-                                dateController.text,
-                                type,
-                                descController.text,
-                                beneController.text,
-                                double.parse(amtController.text));
-                            widget.transId == null
-                                ? _manager.recordTransaction(newTransaction)
-                                : _manager.updateTransaction(newTransaction);
-                            await Future.delayed(Duration(seconds: 1));
-                            Navigator.pop(context);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Submit",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          )),
-                    ),
-                  ],
+              Visibility(
+                visible: true,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              Fluttertoast.showToast(
+                                  msg:
+                                      "Your Transaction has been saved successfully");
+                              Transaction newTransaction = Transaction(
+                                  dateController.text,
+                                  type,
+                                  descController.text,
+                                  beneController.text,
+                                  double.parse(amtController.text));
+                              widget.transId == null
+                                  ? _manager.recordTransaction(newTransaction)
+                                  : _manager.updateTransaction(newTransaction);
+                              await Future.delayed(Duration(seconds: 1));
+                              Navigator.pop(context);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Submit",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            )),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
