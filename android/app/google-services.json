@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "464151737754",
+    "project_id": "transaction-keeper-app",
+    "storage_bucket": "transaction-keeper-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464151737754:android:b21fb8ecf01f2ffa623623",
+        "android_client_info": {
+          "package_name": "com.transaction.transaction_keeper_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "464151737754-02r2abs4sk0hgsadh7pkigq083bckiv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc7tKLXktVYDCF7HlSpXsB7E2u_rglWHI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "464151737754-02r2abs4sk0hgsadh7pkigq083bckiv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
